@@ -191,13 +191,13 @@ export function CalculateRange(range: string): number {
     case "1w":
       from.setDate(from.getDate() - 7)
       break
-    case "1mo":
+    case "1m":
       from.setMonth(from.getMonth() - 1)
       break
-    case "3mo":
+    case "3m":
       from.setMonth(from.getMonth() - 3)
       break
-    case "6mo":
+    case "6m":
       from.setMonth(from.getMonth() - 6)
       break
     case "1y":
