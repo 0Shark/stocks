@@ -1,11 +1,8 @@
-import type { PredefinedScreenerModules } from "@/node_modules/yahoo-finance2/dist/esm/src/modules/screener"
-
-type ScreenerOption = {
-  label: string
-  value: PredefinedScreenerModules
-}
-
-export const ScreenerOptions: ScreenerOption[] = [
+/**
+ * Represents the available screener options for Yahoo Finance.
+ * Values are derived from PredefinedScreenerModules in yahoo-finance2 library.
+ */
+export const ScreenerOptions = [
   { label: "Most Actives", value: "most_actives" },
   { label: "Day Gainers", value: "day_gainers" },
   { label: "Day Losers", value: "day_losers" },
@@ -21,4 +18,6 @@ export const ScreenerOptions: ScreenerOption[] = [
   { label: "Solid Midcap Growth Funds", value: "solid_midcap_growth_funds" },
   { label: "Top Mutual Funds", value: "top_mutual_funds" },
   { label: "Undervalued Large Caps", value: "undervalued_large_caps" },
-]
+] as const
+
+export type ScreenerOption = (typeof ScreenerOptions)[number]
