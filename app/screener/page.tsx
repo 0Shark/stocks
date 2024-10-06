@@ -5,8 +5,8 @@ import { DEFAULT_SCREENER } from "@/lib/yahoo-finance/constants"
 import { fetchScreenerStocks } from "@/lib/yahoo-finance/fetchScreenerStocks"
 
 export const metadata: Metadata = {
-  title: "Finly: Stock screener",
-  description: "Find the best stocks to buy now with the Finly stock screener.",
+  title: "Market Tower: Stock screener",
+  description: "Find the best stocks to buy now with the MarketTower stock screener.",
 }
 export default async function ScreenerPage({
   searchParams,

@@ -18,11 +18,11 @@ export const metadata: Metadata = {
     ? new URL(`https://${process.env.VERCEL_URL}`)
     : undefined,
   title: {
-    default: "Finly: Stock Quotes, Market News, & Analysis",
-    template: `%s - Finly`,
+    default: "Market Tower: Stock Quotes, Market News, & Analysis extended with AI capabilities",
+    template: `%s - Market Tower`,
   },
   description:
-    "Finly is a source of free stock quotes, business and finance news, portfolio management tools, and international market data.",
+    "Market Tower is a source of free stock quotes, business and finance news, portfolio management tools, international market data and AI-powered analysis.",
   icons: {
     icon: "/favicon.ico",
     shortcut: "/favicon-16x16.png",
