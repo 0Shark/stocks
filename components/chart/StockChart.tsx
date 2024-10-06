@@ -1,8 +1,8 @@
+import { Suspense } from "react"
 import { cn } from "@/lib/utils"
 import { fetchChartData } from "@/lib/yahoo-finance/fetchChartData"
 import type { Interval, Range } from "@/types/yahoo-finance"
 import AreaClosedChart from "./AreaClosedChart"
-import yahooFinance from "yahoo-finance2"
 import { fetchQuote } from "@/lib/yahoo-finance/fetchQuote"
 
 interface StockGraphProps {
@@ -24,15 +24,23 @@ function calculatePriceChange(quoteClose: number, currentPrice: number) {
   return ((currentPrice - firstItemPrice) / firstItemPrice) * 100
 }
 
-export default async function StockChart({
-  ticker,
-  range,
-  interval,
-}: StockGraphProps) {
-  const chartData = await fetchChartData(ticker, range, interval)
-  const quoteData = await fetchQuote(ticker)
+// This is the main component that uses Suspense
+export default function StockChart(props: StockGraphProps) {
+  return (
+    <div className="h-[27.5rem] w-full">
+      <Suspense fallback={<div>Loading stock data...</div>}>
+        <StockChartContent {...props} />
+      </Suspense>
+    </div>
+  )
+}
 
-  const [chart, quote] = await Promise.all([chartData, quoteData])
+// This is the content component that fetches and displays the data
+async function StockChartContent({ ticker, range, interval }: StockGraphProps) {
+  const [chart, quote] = await Promise.all([
+    fetchChartData(ticker, range, interval),
+    fetchQuote(ticker),
+  ])
 
   // Use a type assertion for chart.meta
   const chartMeta = chart.meta as any
@@ -52,17 +60,17 @@ export default async function StockChart({
     .filter((quote) => quote.close !== undefined && quote.date !== null)
 
   return (
-    <div className="h-[27.5rem] w-full">
+    <>
       <div>
         <div className="space-x-1 text-muted-foreground">
-          <span className="font-bold text-primary">{quoteData.symbol}</span>
+          <span className="font-bold text-primary">{quote.symbol}</span>
           <span>·</span>
           <span>
-            {quoteData.fullExchangeName === "NasdaqGS"
+            {quote.fullExchangeName === "NasdaqGS"
               ? "NASDAQ"
-              : quoteData.fullExchangeName}
+              : quote.fullExchangeName}
           </span>
-          <span>{quoteData.shortName}</span>
+          <span>{quote.shortName}</span>
         </div>
 
         <div className="flex flex-row items-end justify-between">
@@ -170,6 +178,6 @@ export default async function StockChart({
       {chart.quotes.length > 0 && (
         <AreaClosedChart chartQuotes={ChartQuotes} range={range} />
       )}
-    </div>
+    </>
   )
 }
