@@ -8,7 +8,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu"
+} from "@/components/dashboard_ui/navigation-menu"
 import Link from "next/link"
 import GoBack from "./go-back"
 import { usePathname } from "next/navigation"
@@ -17,6 +17,7 @@ import CommandMenu from "./command-menu"
 const NAVIGATION = [
   { title: "Markets", href: "/" },
   { title: "Screener", href: "/screener" },
+  { title: "Chat", href: "/chat" },
 ]
 
 export default function Navigation() {

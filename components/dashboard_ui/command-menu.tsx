@@ -11,7 +11,7 @@ import {
   CommandList,
   CommandSeparator,
   CommandShortcut,
-} from "@/components/ui/command"
+} from "@/components/dashboard_ui/command"
 import { Button } from "./button"
 import tickers from "@/data/tickers.json"
 import { useRouter } from "next/navigation"

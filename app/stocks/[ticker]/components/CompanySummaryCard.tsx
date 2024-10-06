@@ -1,6 +1,6 @@
 import yahooFinance from "yahoo-finance2"
-import { Card, CardContent } from "../../../../components/ui/card"
-import ReadMoreText from "../../../../components/ui/read-more-text"
+import { Card, CardContent } from "../../../../components/dashboard_ui/card"
+import ReadMoreText from "../../../../components/dashboard_ui/read-more-text"
 import Link from "next/link"
 
 export default async function CompanySummaryCard({

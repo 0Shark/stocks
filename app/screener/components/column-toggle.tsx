@@ -10,8 +10,8 @@ import {
   DropdownMenuContent,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-} from "@/components/ui/dropdown-menu"
-import { Button } from "@/components/ui/button"
+} from "@/components/dashboard_ui/dropdown-menu"
+import { Button } from "@/components/dashboard_ui/button"
 
 interface DataTableViewOptionsProps<TData> {
   table: Table<TData>

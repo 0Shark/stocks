@@ -1,4 +1,4 @@
-import { DataTable } from "@/components/stocks/markets/data-table"
+import { DataTable } from "@/components/stocks_ui/markets/data-table"
 import yahooFinance from "yahoo-finance2"
 import {
   Card,
@@ -6,14 +6,14 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from "@/components/dashboard_ui/card"
 import { DEFAULT_INTERVAL, DEFAULT_RANGE } from "@/lib/yahoo-finance/constants"
 import { Interval } from "@/types/yahoo-finance"
 import { Suspense } from "react"
 import MarketsChart from "@/components/chart/MarketsChart"
 import Link from "next/link"
-import { columns } from "@/components/stocks/markets/columns"
-import SectorPerformance from "@/components/stocks/SectorPerformance"
+import { columns } from "@/components/stocks_ui/markets/columns"
+import SectorPerformance from "@/components/stocks_ui/SectorPerformance"
 import {
   validateInterval,
   validateRange,

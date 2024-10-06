@@ -19,21 +19,21 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
+} from "@/components/dashboard_ui/table"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from "@/components/dashboard_ui/select"
 import { useSearchParams, usePathname, useRouter } from "next/navigation"
 import { ScreenerOptions } from "./screener-options"
 import { useCallback, useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { Button } from "@/components/dashboard_ui/button"
+import { Input } from "@/components/dashboard_ui/input"
 import { DataTableViewOptions } from "./column-toggle"
-import { Card, CardContent } from "@/components/ui/card"
+import { Card, CardContent } from "@/components/dashboard_ui/card"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
