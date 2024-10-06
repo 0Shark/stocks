@@ -19,8 +19,8 @@ const rangeTextMapping = {
   "1y": "Past Year",
 }
 
-function calculatePriceChange(qouteClose: number, currentPrice: number) {
-  const firstItemPrice = qouteClose || 0
+function calculatePriceChange(quoteClose: number, currentPrice: number) {
+  const firstItemPrice = quoteClose || 0
   return ((currentPrice - firstItemPrice) / firstItemPrice) * 100
 }
 
@@ -34,11 +34,14 @@ export default async function StockChart({
 
   const [chart, quote] = await Promise.all([chartData, quoteData])
 
+  // Use a type assertion for chart.meta
+  const chartMeta = chart.meta as any
+
   const priceChange =
     chart.quotes.length &&
     calculatePriceChange(
       Number(chart.quotes[0].close),
-      Number(chart.meta.regularMarketPrice)
+      Number(chartMeta.regularMarketPrice)
     )
 
   const ChartQuotes = chart.quotes
@@ -70,7 +73,7 @@ export default async function StockChart({
                 {quote.regularMarketPrice?.toFixed(2)}
               </span>
               <span className="font-semibold">
-                {quote.regularMarketChange &&
+                {quote.regularMarketChange !== undefined &&
                 quote.regularMarketChangePercent !== undefined ? (
                   quote.regularMarketChange > 0 ? (
                     <span className="text-green-800 dark:text-green-400">
@@ -87,7 +90,7 @@ export default async function StockChart({
               </span>
             </span>
             <span className="inline space-x-1 font-semibold text-muted-foreground">
-              {quote.hasPrePostMarketData && quote.postMarketPrice && (
+              {quote.postMarketPrice !== undefined && (
                 <>
                   <span>·</span>
                   <span>
@@ -95,7 +98,7 @@ export default async function StockChart({
                     {quote.postMarketPrice.toFixed(2)}
                   </span>
                   <span>
-                    {quote.postMarketChange &&
+                    {quote.postMarketChange !== undefined &&
                     quote.postMarketChangePercent !== undefined ? (
                       quote.postMarketChange > 0 ? (
                         <span className="text-green-800 dark:text-green-400">
@@ -112,7 +115,7 @@ export default async function StockChart({
                   </span>
                 </>
               )}
-              {quote.hasPrePostMarketData && quote.preMarketPrice && (
+              {quote.preMarketPrice !== undefined && (
                 <>
                   <span>·</span>
                   <span>
@@ -120,7 +123,7 @@ export default async function StockChart({
                     {quote.preMarketPrice.toFixed(2)}
                   </span>
                   <span>
-                    {quote.preMarketChange &&
+                    {quote.preMarketChange !== undefined &&
                     quote.preMarketChangePercent !== undefined ? (
                       quote.preMarketChange > 0 ? (
                         <span className="text-green-800 dark:text-green-400">

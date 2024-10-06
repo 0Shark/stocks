@@ -72,9 +72,6 @@ export default async function News({ ticker }: { ticker: string }) {
                   {timeAgo(article.providerPublishTime.toISOString())}
                 </span>
                 <span className="font-semibold">{article.title}</span>
-                <span className="text-sm font-medium text-muted-foreground">
-                  {article.published_at}
-                </span>
               </Link>
             ))}
           </div>
