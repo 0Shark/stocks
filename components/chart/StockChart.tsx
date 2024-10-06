@@ -1,4 +1,3 @@
-import { Suspense } from "react"
 import { cn } from "@/lib/utils"
 import { fetchChartData } from "@/lib/yahoo-finance/fetchChartData"
 import type { Interval, Range } from "@/types/yahoo-finance"
@@ -11,12 +10,18 @@ interface StockGraphProps {
   interval: Interval
 }
 
-const rangeTextMapping = {
+const rangeTextMapping: { [key in Range]: string } = {
   "1d": "",
-  "1w": "Past Week",
+  "5d": "Past 5 Days",
   "1m": "Past Month",
   "3m": "Past 3 Months",
+  "6m": "Past 6 Months",
   "1y": "Past Year",
+  "2y": "Past 2 Years",
+  "5y": "Past 5 Years",
+  "10y": "Past 10 Years",
+  ytd: "Year to Date",
+  max: "Max",
 }
 
 function calculatePriceChange(quoteClose: number, currentPrice: number) {
@@ -24,23 +29,15 @@ function calculatePriceChange(quoteClose: number, currentPrice: number) {
   return ((currentPrice - firstItemPrice) / firstItemPrice) * 100
 }
 
-// This is the main component that uses Suspense
-export default function StockChart(props: StockGraphProps) {
-  return (
-    <div className="h-[27.5rem] w-full">
-      <Suspense fallback={<div>Loading stock data...</div>}>
-        <StockChartContent {...props} />
-      </Suspense>
-    </div>
-  )
-}
+export default async function StockChart({
+  ticker,
+  range,
+  interval,
+}: StockGraphProps) {
+  const chartData = await fetchChartData(ticker, range, interval)
+  const quoteData = await fetchQuote(ticker)
 
-// This is the content component that fetches and displays the data
-async function StockChartContent({ ticker, range, interval }: StockGraphProps) {
-  const [chart, quote] = await Promise.all([
-    fetchChartData(ticker, range, interval),
-    fetchQuote(ticker),
-  ])
+  const [chart, quote] = await Promise.all([chartData, quoteData])
 
   // Use a type assertion for chart.meta
   const chartMeta = chart.meta as any
@@ -58,19 +55,18 @@ async function StockChartContent({ ticker, range, interval }: StockGraphProps) {
       close: quote.close?.toFixed(2),
     }))
     .filter((quote) => quote.close !== undefined && quote.date !== null)
-
   return (
-    <>
+    <div className="h-[27.5rem] w-full">
       <div>
         <div className="space-x-1 text-muted-foreground">
-          <span className="font-bold text-primary">{quote.symbol}</span>
+          <span className="font-bold text-primary">{quoteData.symbol}</span>
           <span>·</span>
           <span>
-            {quote.fullExchangeName === "NasdaqGS"
+            {quoteData.fullExchangeName === "NasdaqGS"
               ? "NASDAQ"
-              : quote.fullExchangeName}
+              : quoteData.fullExchangeName}
           </span>
-          <span>{quote.shortName}</span>
+          <span>{quoteData.shortName}</span>
         </div>
 
         <div className="flex flex-row items-end justify-between">
@@ -178,6 +174,6 @@ async function StockChartContent({ ticker, range, interval }: StockGraphProps) {
       {chart.quotes.length > 0 && (
         <AreaClosedChart chartQuotes={ChartQuotes} range={range} />
       )}
-    </>
+    </div>
   )
 }
