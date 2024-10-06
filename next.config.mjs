@@ -10,6 +10,13 @@ const nextConfig = {
       }
     ]
   },
+  experimental: {
+    serverComponentsExternalPackages: ['yahoo-finance2'],
+  },
+  serverRuntimeConfig: {
+    // Increase timeout to 60 seconds (adjust as needed)
+    serverComponentsRenderTimeout: 60000,
+  },
   typescript: {
     // This will completely ignore TypeScript errors during build
     ignoreBuildErrors: true,
