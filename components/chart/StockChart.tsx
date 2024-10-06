@@ -10,18 +10,12 @@ interface StockGraphProps {
   interval: Interval
 }
 
-const rangeTextMapping: { [key in Range]: string } = {
+const rangeTextMapping = {
   "1d": "",
-  "5d": "Past 5 Days",
+  "1w": "Past Week",
   "1m": "Past Month",
   "3m": "Past 3 Months",
-  "6m": "Past 6 Months",
   "1y": "Past Year",
-  "2y": "Past 2 Years",
-  "5y": "Past 5 Years",
-  "10y": "Past 10 Years",
-  ytd: "Year to Date",
-  max: "Max",
 }
 
 function calculatePriceChange(quoteClose: number, currentPrice: number) {
