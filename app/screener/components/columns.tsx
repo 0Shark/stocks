@@ -2,16 +2,28 @@
 
 import { CellContext, ColumnDef } from "@tanstack/react-table"
 
-import type { ScreenerQuote } from "@/node_modules/yahoo-finance2/dist/esm/src/modules/screener"
 import { cn } from "@/lib/utils"
 import Link from "next/link"
 
-export const columns: ColumnDef<ScreenerQuote>[] = [
+interface ScreenerQuoteType {
+  symbol: string
+  shortName?: string
+  regularMarketPrice?: number
+  epsTrailingTwelveMonths?: number
+  regularMarketChange?: number
+  regularMarketChangePercent?: number
+  regularMarketVolume?: number
+  averageDailyVolume3Month?: number
+  marketCap?: number
+  // Add any other properties you're using
+}
+
+export const columns: ColumnDef<ScreenerQuoteType>[] = [
   {
     accessorKey: "symbol",
     meta: "Symbol",
     header: "Symbol",
-    cell: (props: CellContext<ScreenerQuote, unknown>) => {
+    cell: (props: CellContext<ScreenerQuoteType, unknown>) => {
       const { row } = props
       const symbol: string = row.getValue("symbol")
       return (
@@ -38,7 +50,7 @@ export const columns: ColumnDef<ScreenerQuote>[] = [
     header: ({ column }) => {
       return <div className="text-right">P/E</div>
     },
-    cell: (props: CellContext<ScreenerQuote, unknown>) => {
+    cell: (props: CellContext<ScreenerQuoteType, unknown>) => {
       const { row } = props
 
       const regularMarketPrice = row.original.regularMarketPrice
@@ -65,7 +77,7 @@ export const columns: ColumnDef<ScreenerQuote>[] = [
     accessorKey: "regularMarketPrice",
     meta: "Price",
     header: () => <div className="text-right">Price</div>,
-    cell: (props: CellContext<ScreenerQuote, unknown>) => {
+    cell: (props: CellContext<ScreenerQuoteType, unknown>) => {
       const { row } = props
       const price = parseFloat(row.getValue("regularMarketPrice"))
       return <div className="text-right">{price.toFixed(2)}</div>
@@ -75,7 +87,7 @@ export const columns: ColumnDef<ScreenerQuote>[] = [
     accessorKey: "regularMarketChange",
     meta: "Change ($)",
     header: () => <div className="text-right">Change</div>,
-    cell: (props: CellContext<ScreenerQuote, unknown>) => {
+    cell: (props: CellContext<ScreenerQuoteType, unknown>) => {
       const { row } = props
       const marketChange = parseFloat(row.getValue("regularMarketChange"))
       return (
@@ -99,7 +111,7 @@ export const columns: ColumnDef<ScreenerQuote>[] = [
     accessorKey: "regularMarketChangePercent",
     meta: "Change (%)",
     header: () => <div className="text-right">% Change</div>,
-    cell: (props: CellContext<ScreenerQuote, unknown>) => {
+    cell: (props: CellContext<ScreenerQuoteType, unknown>) => {
       const { row } = props
       const marketChangePercent = parseFloat(
         row.getValue("regularMarketChangePercent")
@@ -125,7 +137,7 @@ export const columns: ColumnDef<ScreenerQuote>[] = [
     accessorKey: "regularMarketVolume",
     meta: "Volume",
     header: () => <div className="text-right">Volume</div>,
-    cell: (props: CellContext<ScreenerQuote, unknown>) => {
+    cell: (props: CellContext<ScreenerQuoteType, unknown>) => {
       const { row } = props
       const volume = parseFloat(row.getValue("regularMarketVolume"))
       const formatVolume = (volume: number): string => {
@@ -143,7 +155,7 @@ export const columns: ColumnDef<ScreenerQuote>[] = [
     accessorKey: "averageDailyVolume3Month",
     meta: "Avg Volume",
     header: () => <div className="text-right">Avg Volume</div>,
-    cell: (props: CellContext<ScreenerQuote, unknown>) => {
+    cell: (props: CellContext<ScreenerQuoteType, unknown>) => {
       const { row } = props
       const volume = parseFloat(row.getValue("averageDailyVolume3Month"))
       const formatVolume = (volume: number): string => {
@@ -161,7 +173,7 @@ export const columns: ColumnDef<ScreenerQuote>[] = [
     accessorKey: "marketCap",
     meta: "Market Cap",
     header: () => <div className="text-right">Market Cap</div>,
-    cell: (props: CellContext<ScreenerQuote, unknown>) => {
+    cell: (props: CellContext<ScreenerQuoteType, unknown>) => {
       const { row } = props
       const marketCap = parseFloat(row.getValue("marketCap"))
       const formatMarketCap = (marketCap: number): string => {
