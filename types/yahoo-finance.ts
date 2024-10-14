@@ -15,7 +15,7 @@ export type PredefinedScreenerModules =
   | "undervalued_growth_stocks"
   | "undervalued_large_caps"
 
-export type Range = "1d" | "1w" | "1m" | "3m" | "1y"
+export type Range = "1d" | "1w" | "1m" | "3m" | "1y" | "5y"
 
 export type Interval =
   | "1m"

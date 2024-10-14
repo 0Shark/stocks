@@ -16,6 +16,7 @@ const rangeTextMapping = {
   "1m": "Past Month",
   "3m": "Past 3 Months",
   "1y": "Past Year",
+  "5y": "Past 5 Years"
 }
 
 function calculatePriceChange(quoteClose: number, currentPrice: number) {
